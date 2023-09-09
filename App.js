@@ -6,6 +6,7 @@ import { HomeScreen, LoginScreen, RegistrationScreen } from "./src/screens";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { decode, encode } from "base-64";
 import SettingsScreen from "./src/screens/SettingsScreen/SettingsScreen";
+import HistoricScreen from "./src/screens/HistoricScreen/HistoricScreen";
 
 const Tab = createNativeStackNavigator();
 
@@ -36,6 +37,7 @@ export default function App() {
           component={SettingsScreen}
           options={{ headerShown: false }}
         />
+        <Tab.Screen name="Historico de medições" component={HistoricScreen} />
       </Tab.Navigator>
     </NavigationContainer>
   );
