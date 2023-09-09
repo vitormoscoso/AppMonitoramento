@@ -28,26 +28,17 @@ export default function HomeScreen({ navigation }) {
   return (
     <>
       <Header logout={logout} />
-      <View style={{ marginLeft: "5%" }}>
-        <Text>Bem-vindo, {user.email}!</Text>
-      </View>
-      <View style={{ marginTop: "5%" }}>
-        <ScrollView
-          style={{ width: "100%" }}
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={getDataTest} />
-          }
-        >
-          {data?.map((el) => {
-            return (
-              <View key={el.id} style={{ margin: "5%" }}>
-                <Text>Nível: {el.value} cm</Text>
-                <Text>Horário: {el.timestamp}</Text>
-              </View>
-            );
-          })}
-        </ScrollView>
-      </View>
+      <Text style={{ marginLeft: "5%" }}>Bem-vindo, {user.email}!</Text>
+      <ScrollView style={{ margin: "5%" }}>
+        {data?.map((el) => {
+          return (
+            <View key={el.id} style={{ marginBottom: "5%" }}>
+              <Text>Nível: {el.value} cm</Text>
+              <Text>Horário: {el.timestamp}</Text>
+            </View>
+          );
+        })}
+      </ScrollView>
     </>
   );
 }

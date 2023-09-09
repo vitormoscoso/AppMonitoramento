@@ -1,10 +1,11 @@
-import "react-native-gesture-handler";
-import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import { LoginScreen, HomeScreen, RegistrationScreen } from "./src/screens";
-import { decode, encode } from "base-64";
+import React from "react";
+import "react-native-gesture-handler";
+import { HomeScreen, LoginScreen, RegistrationScreen } from "./src/screens";
+
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Header from "./src/components/Header/header";
+import { decode, encode } from "base-64";
+import SettingsScreen from "./src/screens/SettingsScreen/SettingsScreen";
 
 const Tab = createNativeStackNavigator();
 
@@ -28,6 +29,11 @@ export default function App() {
         <Tab.Screen
           name="Home"
           component={HomeScreen}
+          options={{ headerShown: false }}
+        />
+        <Tab.Screen
+          name="Settings"
+          component={SettingsScreen}
           options={{ headerShown: false }}
         />
       </Tab.Navigator>
