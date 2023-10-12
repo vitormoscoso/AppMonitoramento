@@ -1,5 +1,9 @@
 import React, { useState } from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import {
+  Text,
+  TouchableOpacity,
+  View
+} from "react-native";
 import { Menu, PaperProvider } from "react-native-paper";
 import Icon from "react-native-vector-icons/Feather";
 import styles from "./styles";
@@ -29,14 +33,15 @@ export default function Header({ logout, user }) {
               // Aqui você pode navegar para a tela de configuração ou realizar outra ação
             }}
             title="Configurações"
+            leadingIcon={"cog-outline"}
           />
-
           <Menu.Item
             onPress={() => {
               closeMenu();
               logout();
             }}
             title="Logout"
+            leadingIcon={"logout"}
           />
         </Menu>
       </View>
