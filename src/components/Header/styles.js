@@ -11,7 +11,7 @@ export default StyleSheet.create({
     marginTop: "10%",
   },
   texto: {
-    fontSize: 20,
+    fontSize: 15,
     fontFamily: "Roboto",
     fontWeight: "500",
     color: "#fff",
