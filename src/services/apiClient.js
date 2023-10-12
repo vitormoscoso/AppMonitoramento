@@ -4,13 +4,15 @@ import {
   query,
   where,
   onSnapshot,
+  orderBy,
+  limit,
 } from "firebase/firestore";
 import { db } from "../firebase/config";
 import { formatDate } from "../utils/date";
 
 export async function getData(setData) {
   try {
-    const q = query(collection(db, "level"));
+    const q = query(collection(db, "level"), orderBy("timestamp", "desc"));
     onSnapshot(q, (querySnapshot) => {
       const responseData = [];
       querySnapshot.forEach((doc) => {
@@ -27,23 +29,23 @@ export async function getData(setData) {
   }
 }
 
-// export async function getCurrentData(setCurrentData) {
-//   try {
-//     const q = query(
-//       collection(db, "level"),
-//       orderBy("timestamp", "desc"),
-//       limit(1)
-//     );
-//     onSnapshot(q, (querySnapshot) => {
-//       querySnapshot.forEach((doc) => {
-//         setCurrentData({
-//           id: doc.id,
-//           timestamp: formatDate(doc.data().timestamp),
-//           value: doc.data().value,
-//         });
-//       });
-//     });
-//   } catch (error) {
-//     console.log("erro: ", error);
-//   }
-// }
+export async function getCurrentData(setCurrentData) {
+  try {
+    const q = query(
+      collection(db, "level"),
+      orderBy("timestamp", "desc"),
+      limit(1)
+    );
+    onSnapshot(q, (querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        setCurrentData({
+          id: doc.id,
+          timestamp: formatDate(doc.data().timestamp),
+          value: doc.data().value,
+        });
+      });
+    });
+  } catch (error) {
+    console.log("erro: ", error);
+  }
+}

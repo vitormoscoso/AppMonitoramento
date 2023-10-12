@@ -1,17 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ScrollView, Text, View } from "react-native";
 import { Card } from "react-native-paper";
 import Icon from "react-native-vector-icons/Feather";
 import Header from "../../components/Header/header";
 import { auth } from "../../firebase/config";
+import { getCurrentData } from "../../services/apiClient";
 
 export default function HomeScreen({ navigation }) {
   // const user = auth.currentUser;
+  const [currentData, setCurrentData] = useState({});
 
   function logout() {
     auth.signOut();
     navigation.replace("Login");
   }
+
+  async function getCurrent() {
+    const data = await getCurrentData(setCurrentData);
+    setCurrentData(data);
+  }
+
+  useEffect(() => {
+    getCurrent();
+  }, []);
+
+  console.log("currentData: ", currentData);
 
   return (
     <>
@@ -60,9 +73,13 @@ export default function HomeScreen({ navigation }) {
               <Text
                 style={{ fontWeight: "bold", fontSize: 20, marginBottom: "2%" }}
               >
-                1,2 m
+                {currentData !== null && currentData !== undefined
+                  ? `${currentData.value.toFixed(2)} cm`
+                  : "-"}
               </Text>
-              <Text>08/09 - 13:15:44</Text>
+              <Text>{currentData !== null && currentData !== undefined
+                  ? currentData.timestamp
+                  : "-"}</Text>
             </Card.Content>
           </Card>
           <Card
@@ -72,7 +89,7 @@ export default function HomeScreen({ navigation }) {
               marginBottom: "3%",
             }}
           >
-            <Card.Title title="Capacidade" />
+            <Card.Title title="Capacidade Atual" />
             <Card.Content style={{ alignItems: "center" }}>
               <Text
                 style={{ fontWeight: "bold", fontSize: 20, marginBottom: "2%" }}
