@@ -24,8 +24,6 @@ export default function HomeScreen({ navigation }) {
     getCurrent();
   }, []);
 
-  console.log("currentData: ", currentData);
-
   return (
     <>
       <Header logout={logout} />
