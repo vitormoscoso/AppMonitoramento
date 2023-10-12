@@ -8,7 +8,7 @@ import {
   query,
 } from "firebase/firestore";
 import { db } from "../firebase/config";
-import { formatDate } from "../utils/date";
+import { formatDate } from "../utils";
 
 export async function getData(setData) {
   try {

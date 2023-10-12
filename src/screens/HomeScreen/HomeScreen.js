@@ -6,7 +6,7 @@ import Header from "../../components/Header/header";
 import TankComponent from "../../components/TankComponent";
 import { auth } from "../../firebase/config";
 import { getCurrentData, getUserData } from "../../services/apiClient";
-import { calculateCapacity } from "../../utils/date";
+import { calculateCapacity } from "../../utils";
 
 export default function HomeScreen({ navigation }) {
   const user = auth.currentUser;
