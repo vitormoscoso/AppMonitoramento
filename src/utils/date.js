@@ -7,3 +7,7 @@ export function formatDate(isoDate) {
 
   return output;
 }
+
+export function calculateCapacity(currentLevel, totalDepth) {
+  return (currentLevel / totalDepth) * 100;
+}

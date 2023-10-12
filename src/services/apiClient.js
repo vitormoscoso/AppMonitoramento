@@ -1,11 +1,11 @@
 import {
   collection,
-  getDocs,
-  query,
-  where,
+  doc,
+  getDoc,
+  limit,
   onSnapshot,
   orderBy,
-  limit,
+  query,
 } from "firebase/firestore";
 import { db } from "../firebase/config";
 import { formatDate } from "../utils/date";
@@ -47,5 +47,15 @@ export async function getCurrentData(setCurrentData) {
     });
   } catch (error) {
     console.log("erro: ", error);
+  }
+}
+export async function getUserData(userId) {
+  try {
+    const userDoc = doc(collection(db, "users"), userId);
+    const userSnapshot = await getDoc(userDoc);
+    return userSnapshot.data();
+  } catch (error) {
+    console.log("erro: ", error);
+    return null;
   }
 }

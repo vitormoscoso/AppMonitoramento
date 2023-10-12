@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { ScrollView, Text, View } from "react-native";
 import { Card } from "react-native-paper";
 import Icon from "react-native-vector-icons/Feather";
 import Header from "../../components/Header/header";
 import TankComponent from "../../components/TankComponent";
 import { auth } from "../../firebase/config";
-import { getCurrentData } from "../../services/apiClient";
+import { getCurrentData, getUserData } from "../../services/apiClient";
+import { calculateCapacity } from "../../utils/date";
 
 export default function HomeScreen({ navigation }) {
-  // const user = auth.currentUser;
+  const user = auth.currentUser;
   const [currentData, setCurrentData] = useState({});
+  const [userData, setUserData] = useState({});
 
   function logout() {
     auth.signOut();
@@ -20,9 +22,29 @@ export default function HomeScreen({ navigation }) {
     const data = await getCurrentData(setCurrentData);
     setCurrentData(data);
   }
+  async function getUser() {
+    const data = await getUserData(user.uid);
+    setUserData(data);
+  }
+
+  const capacity = useMemo(() => {
+    try {
+      return {
+        value: calculateCapacity(currentData?.value, userData?.depth)?.toFixed(
+          0
+        ),
+        unit: "%",
+        subtitle: "Disponível",
+      };
+    } catch (error) {
+      console.error(error);
+      return { value: "-", unit: "", subtitle: "" };
+    }
+  }, [currentData, userData]);
 
   useEffect(() => {
     getCurrent();
+    getUser();
   }, []);
 
   return (
@@ -46,7 +68,7 @@ export default function HomeScreen({ navigation }) {
               marginBottom: "5%",
             }}
           >
-            <TankComponent capacity={90} />
+            <TankComponent capacity={capacity?.value} />
           </View>
           <Card
             style={{
@@ -102,9 +124,9 @@ export default function HomeScreen({ navigation }) {
               <Text
                 style={{ fontWeight: "bold", fontSize: 20, marginBottom: "2%" }}
               >
-                20%
+                {capacity?.value} {capacity?.unit}
               </Text>
-              <Text>disponível</Text>
+              <Text>{capacity?.subtitle}</Text>
             </Card.Content>
           </Card>
         </View>
