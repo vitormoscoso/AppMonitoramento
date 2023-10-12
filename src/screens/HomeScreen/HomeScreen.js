@@ -72,7 +72,7 @@ export default function HomeScreen({ navigation }) {
                 style={{ fontWeight: "bold", fontSize: 20, marginBottom: "2%" }}
               >
                 {currentData !== null && currentData !== undefined
-                  ? `${currentData.value.toFixed(2)} cm`
+                  ? `${currentData?.value?.toFixed(2)} cm`
                   : "-"}
               </Text>
               <Text>{currentData !== null && currentData !== undefined
