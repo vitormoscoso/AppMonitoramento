@@ -3,6 +3,7 @@ import { ScrollView, Text, View } from "react-native";
 import { Card } from "react-native-paper";
 import Icon from "react-native-vector-icons/Feather";
 import Header from "../../components/Header/header";
+import TankComponent from "../../components/TankComponent";
 import { auth } from "../../firebase/config";
 import { getCurrentData } from "../../services/apiClient";
 
@@ -40,6 +41,13 @@ export default function HomeScreen({ navigation }) {
             marginBottom: "5%",
           }}
         >
+          <View
+            style={{
+              marginBottom: "5%",
+            }}
+          >
+            <TankComponent capacity={90} />
+          </View>
           <Card
             style={{
               width: "90%",
@@ -75,9 +83,11 @@ export default function HomeScreen({ navigation }) {
                   ? `${currentData?.value?.toFixed(2)} cm`
                   : "-"}
               </Text>
-              <Text>{currentData !== null && currentData !== undefined
+              <Text>
+                {currentData !== null && currentData !== undefined
                   ? currentData.timestamp
-                  : "-"}</Text>
+                  : "-"}
+              </Text>
             </Card.Content>
           </Card>
           <Card
