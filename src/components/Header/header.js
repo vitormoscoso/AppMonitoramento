@@ -1,14 +1,10 @@
 import React, { useState } from "react";
-import {
-  Text,
-  TouchableOpacity,
-  View
-} from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import { Menu, PaperProvider } from "react-native-paper";
 import Icon from "react-native-vector-icons/Feather";
 import styles from "./styles";
 
-export default function Header({ logout, user }) {
+export default function Header({ navigation, logout, user }) {
   const [menuVisible, setMenuVisible] = useState(false);
 
   const openMenu = () => setMenuVisible(true);
@@ -28,10 +24,7 @@ export default function Header({ logout, user }) {
           }
         >
           <Menu.Item
-            onPress={() => {
-              closeMenu();
-              // Aqui você pode navegar para a tela de configuração ou realizar outra ação
-            }}
+            onPress={() => navigation.navigate("Configurações")}
             title="Configurações"
             leadingIcon={"cog-outline"}
           />

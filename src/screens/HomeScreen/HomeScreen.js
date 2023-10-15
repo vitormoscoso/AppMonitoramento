@@ -52,7 +52,7 @@ export default function HomeScreen({ navigation }) {
 
   return (
     <>
-      <Header logout={logout} user={userData?.name} />
+      <Header logout={logout} user={userData?.name} navigation={navigation}/>
       {/* <Text style={{ marginLeft: "5%" }}>Bem-vindo, {user.email}!</Text> */}
       <ScrollView>
         <View
