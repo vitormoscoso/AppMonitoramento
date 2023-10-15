@@ -29,11 +29,9 @@ export default function TankComponent({ capacity }) {
   };
 
   return (
-    <View>
-      <Image
-        source={images[imageName]}
-        style={{ width: 200, height: 200 }}
-      ></Image>
-    </View>
+    <Image
+      source={images[imageName]}
+      style={{ width: 200, height: 200 }}
+    ></Image>
   );
 }
