@@ -30,11 +30,14 @@ export default function HomeScreen({ navigation }) {
   const capacity = useMemo(() => {
     try {
       return {
-        value: calculateCapacity(currentData?.value, userData?.depth)?.toFixed(
-          0
-        ),
+        value: calculateCapacity(
+          currentData?.value,
+          userData?.height,
+          userData?.length,
+          // userData?.width
+        )?.toFixed(0),
         unit: "%",
-        subtitle: "Disponível",
+        subtitle: "Cheio",
       };
     } catch (error) {
       console.error(error);
@@ -49,7 +52,7 @@ export default function HomeScreen({ navigation }) {
 
   return (
     <>
-      <Header logout={logout} user={userData?.name}/>
+      <Header logout={logout} user={userData?.name} />
       {/* <Text style={{ marginLeft: "5%" }}>Bem-vindo, {user.email}!</Text> */}
       <ScrollView>
         <View
@@ -59,17 +62,19 @@ export default function HomeScreen({ navigation }) {
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-            marginTop: "5%",
-            marginBottom: "5%",
           }}
         >
-          <View
-            style={{
-              marginBottom: "5%",
-            }}
-          >
-            <TankComponent capacity={capacity?.value} />
-          </View>
+          {capacity?.value !== "NaN" ? (
+            <View
+              style={{
+                marginBottom: "5%",
+              }}
+            >
+              <TankComponent capacity={capacity?.value} />
+            </View>
+          ) : (
+            <></>
+          )}
           <Card
             style={{
               width: "90%",
@@ -89,7 +94,7 @@ export default function HomeScreen({ navigation }) {
                 marginRight: "5%",
               }}
             >
-              <Text style={{ fontSize: 15 }}>Nível atual</Text>
+              <Text style={{ fontSize: 15 }}>Medição atual</Text>
               <Icon
                 name={"more-horizontal"}
                 size={25}
@@ -124,9 +129,13 @@ export default function HomeScreen({ navigation }) {
               <Text
                 style={{ fontWeight: "bold", fontSize: 20, marginBottom: "2%" }}
               >
-                {capacity?.value} {capacity?.unit}
+                {capacity?.value !== "NaN"
+                  ? `${capacity?.value} ${capacity?.unit}`
+                  : "-"}
               </Text>
-              <Text>{capacity?.subtitle}</Text>
+              <Text>
+                {capacity?.value !== "NaN" ? capacity?.subtitle : "-"}
+              </Text>
             </Card.Content>
           </Card>
         </View>
