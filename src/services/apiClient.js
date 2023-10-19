@@ -6,6 +6,7 @@ import {
   onSnapshot,
   orderBy,
   query,
+  updateDoc,
 } from "firebase/firestore";
 import { db } from "../firebase/config";
 import { formatDate } from "../utils";
@@ -49,6 +50,7 @@ export async function getCurrentData(setCurrentData) {
     console.log("erro: ", error);
   }
 }
+
 export async function getUserData(userId) {
   try {
     const userDoc = doc(collection(db, "users"), userId);
@@ -57,5 +59,16 @@ export async function getUserData(userId) {
   } catch (error) {
     console.log("erro: ", error);
     return null;
+  }
+}
+
+export async function UpdateUserData(userID, data) {
+  try {
+    const userDoc = doc(db, "users", userID);
+    await updateDoc(userDoc, data);
+    return "ok";
+  } catch (error) {
+    console.log(error);
+    return "error";
   }
 }

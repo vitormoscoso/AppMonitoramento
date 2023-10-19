@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { Button, TextInput } from "react-native-paper";
 import { auth } from "../../firebase/config";
-import { getUserData } from "../../services/apiClient";
+import { UpdateUserData, getUserData } from "../../services/apiClient";
 
 const styles = StyleSheet.create({
   container: {
@@ -38,7 +38,10 @@ export default function SettingsScreen() {
     });
   }
 
-  const handleUpdate = () => {
+  // altura: 34
+
+  const handleUpdate = async () => {
+    resultado = await UpdateUserData(user.uid, userInfo);
     // Lógica para atualizar as informações do usuário
     // Por exemplo, pode ser uma chamada de API que envia "userInfo" para o backend
     console.log("Informações do usuário atualizadas:", userInfo);
@@ -80,9 +83,14 @@ export default function SettingsScreen() {
       <TextInput
         label="Altura (cm)"
         value={userInfo.height.toString()}
-        onChange={(height) =>
-          setUserInfo({ ...userInfo, height: height.replace(/[^0-9]/g, "") })
-        }
+        onChangeText={(height) => {
+          const numericHeight = height.replace(/[^0-9]/g, ""); // Removendo caracteres não numéricos
+          // Atualizando o estado com o valor numérico; se numericHeight for "", ele converte para 0
+          setUserInfo({
+            ...userInfo,
+            height: numericHeight ? parseInt(numericHeight, 10) : 0,
+          });
+        }}
         style={styles.input}
         keyboardType="numeric"
       />
