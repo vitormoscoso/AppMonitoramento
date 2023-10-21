@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "681908240230",
+    "firebase_url": "https://monitoramento-de-fossas-default-rtdb.firebaseio.com",
+    "project_id": "monitoramento-de-fossas",
+    "storage_bucket": "monitoramento-de-fossas.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:681908240230:android:d4b4b7442b78de78a8d2a7",
+        "android_client_info": {
+          "package_name": "com.monitoramentoNotification"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "681908240230-d960n72tam703hg2b6bgo42o33npfh3d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzbGMfwsjWi4wFXjZ2mu6OalybMpQwTYg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "681908240230-d960n72tam703hg2b6bgo42o33npfh3d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

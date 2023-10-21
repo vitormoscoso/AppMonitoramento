@@ -21,7 +21,9 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "googleServiceFile": "./google-services.json",
+      "package": "com.monitoramentoNotification"
     },
     "web": {
       "favicon": "./assets/favicon.png"
