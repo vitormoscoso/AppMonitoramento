@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { Alert, ScrollView, StyleSheet, Text, View } from "react-native";
 import { Button, TextInput } from "react-native-paper";
 import { auth } from "../../firebase/config";
 import { UpdateUserData, getUserData } from "../../services/apiClient";
@@ -17,8 +17,17 @@ const styles = StyleSheet.create({
   },
 });
 
+const showUpdateAlert = (status) => {
+  if (status === "ok") {
+    Alert.alert("Sucesso", "Informações atualizadas com sucesso!");
+  } else if (status === "error")  {
+    Alert.alert("Erro", "Erro ao atualizar informações!");
+  }
+};
+
 export default function SettingsScreen() {
   const user = auth.currentUser;
+  const [initialUserInfo, setInitialUserInfo] = useState(null);
   const [userInfo, setUserInfo] = useState({
     name: "",
     lastName: "",
@@ -26,25 +35,37 @@ export default function SettingsScreen() {
     length: 0,
     width: 0,
   });
+  const [updateStatus, setUpdateStatus] = useState("");
 
   async function getUser() {
     const data = await getUserData(user.uid);
-    setUserInfo({
+    const userData = {
       name: data?.name,
       lastName: data?.lastName,
       height: data?.height,
       length: data?.length,
       width: data?.width,
-    });
+    };
+    setUserInfo(userData);
+    setInitialUserInfo(userData);
   }
 
   // altura: 34
 
   const handleUpdate = async () => {
-    resultado = await UpdateUserData(user.uid, userInfo);
-    // Lógica para atualizar as informações do usuário
-    // Por exemplo, pode ser uma chamada de API que envia "userInfo" para o backend
-    console.log("Informações do usuário atualizadas:", userInfo);
+    if (initialUserInfo === userInfo) {
+      Alert.alert("Aviso", "Nenhuma alteração realizada.");
+      return;
+    }
+    try {
+      resultado = await UpdateUserData(user.uid, userInfo);
+      setUpdateStatus("ok");
+    } catch (error) {
+      setUpdateStatus("error");
+      console.log("Erro ao atualizar:", error);
+    } finally {
+      showUpdateAlert(updateStatus);
+    }
   };
 
   useEffect(() => {
@@ -65,14 +86,12 @@ export default function SettingsScreen() {
       </View>
       <TextInput
         label="Nome"
-        disabled
         value={userInfo.name}
         onChangeText={(name) => setUserInfo({ ...userInfo, name })}
         style={styles.input}
       />
       <TextInput
         label="Sobrenome"
-        disabled
         value={userInfo.lastName}
         onChangeText={(email) => setUserInfo({ ...userInfo, email })}
         style={styles.input}
