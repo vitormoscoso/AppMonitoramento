@@ -6,7 +6,8 @@ import Header from "../../components/Header/header";
 import TankComponent from "../../components/TankComponent";
 import { auth } from "../../firebase/config";
 import { getCurrentData, getUserData } from "../../services/apiClient";
-import { calculateCapacity } from "../../utils";
+// import { calculateCapacity } from "../../utils";
+import { calculateCapacityTest } from "../../utils";
 
 export default function HomeScreen({ navigation }) {
   const user = auth.currentUser;
@@ -29,12 +30,22 @@ export default function HomeScreen({ navigation }) {
 
   const capacity = useMemo(() => {
     try {
+      // return {
+      //   value: calculateCapacity(
+      //     currentData?.value,
+      //     userData?.height,
+      //     userData?.length,
+      //     // userData?.width
+      //   )?.toFixed(0),
+      //   unit: "%",
+      //   subtitle: "Cheio",
+      // };
       return {
-        value: calculateCapacity(
+        value: calculateCapacityTest(
           currentData?.value,
           userData?.height,
           userData?.length,
-          // userData?.width
+          userData?.width
         )?.toFixed(0),
         unit: "%",
         subtitle: "Cheio",
